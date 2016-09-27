@@ -54,7 +54,7 @@ def choose(d):
 def getDict():
     return d
 
-f = open("occupations.csv","r")
+f = open("data/occupations.csv","r")
 fText = f.read()
 
 d = makeDict(prep(fText))

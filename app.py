@@ -1,5 +1,5 @@
 from flask import Flask, render_template
-import util.script
+import utils.script
 
 #this is a constructor call
 #creating an instance of a class
@@ -27,11 +27,11 @@ def page1():
 <a href="/">Go back</a>
     '''
 
-d = util.script.getDict()
+d = utils.script.getDict()
 
 @app.route("/occupations")
 def occu():
-    return render_template("occupations.html", foo = "Occupations", dic = d, choose = util.script.choose(d))
+    return render_template("occupations.html", foo = "Occupations", dic = d, choose = utils.script.choose(d))
 
 coll = [1, 3, 3, 7]
 
