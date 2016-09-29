@@ -1,42 +1,43 @@
-from flask import Flask, render_template, request
-
+from flask import Flask, render_template
+import utils.script
 
 #this is a constructor call
 #creating an instance of a class
 app = Flask(__name__) 
-print app
+
 #tells apache what to do when browser requests access from root of flask app
 @app.route("/")
 def helloWorld():
-    print "\n\n\n\n"
-    print "::DIAG:: this flsk obj"
-    print app
-    print "::DIAG:: this request obj"
-    print request
-    print "::DIAG:: request.headers"
-    print request.headers
-    print "::DIAG:: request.method"
-    print request.method
-    print "::DIAG:: request.args"
-    print request.args 
-    print "::DIAG:: request.form"
-    print request.form
-    return render_template("form.html")
+    return '''
+Hello! Welcome to my webpage.<br><br>
+Feel free to <a href="page0">click</a>
+<a href="page1">around</a>'''
 
+@app.route("/page0")
+def page0():
+    return '''
+<a href="http://orteil.dashnet.org/cookieclicker" target="_blank">Here\'s a fun \'lil game for you</a>.<br><br>
+Or, <a href="/">go back</a>
+    '''
 
-@app.route("/auth", methods=["POST"])
-def authenticate():
-    username = "arthur"
-    password = "read"
-    inputtedUser = request.form['username']
-    inputtedPass = request.form['password']
-    if username == inputtedUser and password == inputtedPass:
-        my_title = "Success!"
-        my_text = "Logged in!!! Yessss"
-    else:
-        my_title = "Failure!"
-        my_text = "Authentification failed...... c'mon man....."
-    return render_template("output.html", title = my_title, text = my_text)
+@app.route("/page1")
+def page1():
+    return '''
+<a href="https://www.reddit.com/r/etymology/comments/32jf5d/what_is_the_origin_of_the_phrase_be_there_or_be/cqbwxqq" target="_blank">Did you know?</a><br><br>
+<a href="/">Go back</a>
+    '''
+
+d = utils.script.getDict()
+
+@app.route("/occupations")
+def occu():
+    return render_template("occupations.html", foo = "Occupations", dic = d, choose = utils.script.choose(d))
+
+coll = [1, 3, 3, 7]
+
+@app.route("/template")
+def test_tmplt():
+    return render_template("template.html", foo = "HELLLOOOOO", fool = coll)
 
 if __name__ == "__main__":
     app.debug = True
